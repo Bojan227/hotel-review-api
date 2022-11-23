@@ -18,8 +18,22 @@ async function registerUser(request, response) {
   }
 }
 
+async function loginUser(request, response) {
+  const { password } = request.body;
+
+  try {
+    const user = await login(request.body.email, password);
+    const { _id, displayName, email } = user;
+    const token = createToken(_id);
+
+    response.status(200).json({ user: { _id, displayName, email }, token });
+  } catch (error) {
+    response.status(400).json({ error: error.message });
+  }
+}
+
 
 module.exports = {
   registerUser,
-  
+  loginUser
 };
