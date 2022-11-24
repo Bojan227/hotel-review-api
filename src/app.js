@@ -9,6 +9,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // import routes
 const userRoutes = require('./routes/userRoutes');
+const reviewRoutes = require('./routes/reviewRoutes')
 
 app.use('/user', userRoutes);
 
