@@ -9,9 +9,12 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // import routes
 const userRoutes = require('./routes/userRoutes');
-const reviewRoutes = require('./routes/reviewRoutes')
+const reviewRoutes = require('./routes/reviewRoutes');
+const hotelRoutes = require('./routes/hotelRoutes');
 
 app.use('/user', userRoutes);
+app.use('/review', reviewRoutes);
+app.use('/hotel', hotelRoutes);
 
 mongoose.connect(process.env.MONGO_URI).then(() => {
   app.listen(3000, () => {
