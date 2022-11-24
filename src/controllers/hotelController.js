@@ -45,9 +45,26 @@ async function getHotels(request, response) {
     }
   }
 
+  async function editHotelDetails(request, response) {
+    const { hotelName, address, text, hotelId } = request.body;
+  
+    const updateInfo = { hotelName, address, text };
+  
+    try {
+      const newHotel = await HotelDB.findOneAndUpdate({ _id: hotelId }, updateInfo, {
+        returnOriginal: false,
+      });
+  
+      response.status(200).json(newHotel);
+    } catch (error) {
+      response.status(400).json({ error: error.message });
+    }
+  }
+
 
   module.exports = {
     getHotels,
     getHotelByHotelId,
-    createHotel
+    createHotel,
+    editHotelDetails
   }
