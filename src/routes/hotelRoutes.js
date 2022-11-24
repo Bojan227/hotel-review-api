@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const requireAuth = require('../middleware/requireAuth')
 
 router.get('/', getHotels);
 router.get('/:hotelId', getHotelByHotelId);
+router.use(requireAuth)
 router.post('/', createHotel);
 router.put('/', editHotelDetails);
 
