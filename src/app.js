@@ -3,7 +3,9 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
+const cors = require('cors')
 
+app.use(cors())
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
@@ -11,7 +13,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 const userRoutes = require('./routes/userRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const hotelRoutes = require('./routes/hotelRoutes');
-
+// use routes
 app.use('/user', userRoutes);
 app.use('/review', reviewRoutes);
 app.use('/hotel', hotelRoutes);
