@@ -23,10 +23,10 @@ async function loginUser(request, response) {
 
   try {
     const user = await login(request.body.email, password);
-    const { _id, displayName, email } = user;
+    const { _id, displayName, email, role } = user;
     const token = createToken(_id);
 
-    response.status(200).json({ user: { _id, displayName, email }, token });
+    response.status(200).json({ user: { _id, displayName, email, role }, token });
   } catch (error) {
     response.status(400).json({ error: error.message });
   }
