@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const HotelDB = require('./hotelModel')
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({
@@ -6,6 +7,7 @@ const UserSchema = new Schema({
   password: { type: String, required: true },
   displayName: { type: String, required: true },
   role: { type: String, required: true },
+  favourites: [{ type: Schema.Types.ObjectId, ref: HotelDB }]
 });
 
 const myDB = mongoose.connection.useDb('hotel-api');

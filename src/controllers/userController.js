@@ -23,7 +23,7 @@ async function loginUser(request, response) {
 
   try {
     const user = await login(request.body.email, password);
-    const { _id, displayName, email, role } = user;
+    const { _id, displayName, email, role, favourites } = user;
     const token = createToken(_id);
 
     response.status(200).json({ user: { _id, displayName, email, role }, token });
