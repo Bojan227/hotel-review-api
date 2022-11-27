@@ -7,6 +7,18 @@ const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.SECRET);
 };
 
+async function getFavourites(request, response) {
+
+  try {
+    const {favourites} = await User.findOne({_id: request.user[0]})
+
+    response.status(200).json(favourites);
+  } catch (error) {
+    response.status(400).json({ error: error.message });
+  }
+}
+
+
 async function registerUser(request, response) {
   const { email, displayName, password } = request.body;
   try {
@@ -35,5 +47,6 @@ async function loginUser(request, response) {
 
 module.exports = {
   registerUser,
-  loginUser
+  loginUser,
+  getFavourites
 };
