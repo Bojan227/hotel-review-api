@@ -107,9 +107,49 @@ async function getReviewsByHotelId(request, response) {
   }
 
 
+  async function getLikeUsers(request, response) {
+    const { reviewId } = request.params;
+  
+  
+    try {
+      const {likes} = await Review.findOne(
+        { _id: reviewId },
+      ).populate({
+        path: 'likes',
+        select: ['_id', 'email', 'displayName', 'role'],
+      });
+  
+      console.log(likes)
+      response.status(200).json({users: likes});
+    } catch (error) {
+      response.status(400).json({ error: error.message });
+    }
+  }
+  async function getDislikeUsers(request, response) {
+    const { reviewId } = request.params;
+  
+  
+    try {
+      const {dislikes} = await Review.findOne(
+        { _id: reviewId },
+      ).populate({
+        path: 'likes',
+        select: ['_id', 'email', 'displayName', 'role'],
+      });
+  
+      response.status(200).json({users: dislikes});
+    } catch (error) {
+      response.status(400).json({ error: error.message });
+    }
+  }
+
+
+
   module.exports = {
     getReviewsByHotelId,
     createReview,
     updateLike,
-    updateDislike
+    updateDislike,
+    getLikeUsers,
+    getDislikeUsers
   }

@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const requireAuth = require('../middleware/requireAuth')
-const {getReviewsByHotelId, createReview, updateLike, updateDislike} = require('../controllers/reviewController')
+const {getReviewsByHotelId, createReview, updateLike, updateDislike, getLikeUsers, getDislikeUsers} = require('../controllers/reviewController')
 
 
 router.get('/:hotelId', getReviewsByHotelId);
+router.get('/:reviewId/likes', getLikeUsers)
+router.get('/:reviewId/dislikes', getDislikeUsers)
+
 
 router.use(requireAuth)
 router.post('/', createReview);
