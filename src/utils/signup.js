@@ -31,7 +31,7 @@ async function signup(email, displayName, password) {
     password: hash,
     displayName,
     role: 'regular',
-    favourites
+    favourites: []
   });
 
   return newUser;

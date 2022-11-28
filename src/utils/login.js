@@ -6,7 +6,7 @@ async function login(email, password) {
     throw new Error('All fields must be filled');
   }
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).populate('favourites');
 
   if (!user) {
     throw new Error('Wrong username');
