@@ -2,14 +2,21 @@ const HotelDB = require('../models/hotelModel');
 const uploadImage = require('../utils/uploadImage')
 
 async function getHotels(request, response) {
-    try {
-      const hotels = await HotelDB.find({}).sort({ hotelName: 1 });
-  
-      response.status(200).json(hotels);
-    } catch (error) {
-      response.status(400).json({ error: error.message });
-    }
+  const { name, address } = request.query;
+  try {
+    const hotels = await HotelDB.find({
+      hotelName: { $regex: name, $options: 'i' },
+      address: { $regex: address, $options: 'i' },
+    })
+      .collation({ locale: 'en', strength: 2 })
+      .sort({ hotelName: 1 });
+
+    console.log(hotels);
+    response.status(200).json(hotels);
+  } catch (error) {
+    response.status(400).json({ error: error.message });
   }
+}
 
 
   async function getHotelByHotelId(request, response) {
