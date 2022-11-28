@@ -59,7 +59,7 @@ async function getReviewsByHotelId(request, response) {
         }
       ).populate({
         path: 'createdBy',
-        select: ['_id', 'email', 'displayName', 'role'],
+        select: ['_id', 'email', 'displayName', 'role', 'favourites'],
       });
       console.log(updatedReview);
       response.status(200).json(updatedReview);
@@ -97,7 +97,7 @@ async function getReviewsByHotelId(request, response) {
         }
       ).populate({
         path: 'createdBy',
-        select: ['_id', 'email', 'displayName', 'role'],
+        select: ['_id', 'email', 'displayName', 'role', 'favourites'],
       });
   
       response.status(200).json(updatedReview);
@@ -116,10 +116,9 @@ async function getReviewsByHotelId(request, response) {
         { _id: reviewId },
       ).populate({
         path: 'likes',
-        select: ['_id', 'email', 'displayName', 'role'],
+        select: ['_id', 'email', 'displayName', 'role', 'favourites'],
       });
   
-      console.log(likes)
       response.status(200).json({users: likes});
     } catch (error) {
       response.status(400).json({ error: error.message });
@@ -133,8 +132,8 @@ async function getReviewsByHotelId(request, response) {
       const {dislikes} = await Review.findOne(
         { _id: reviewId },
       ).populate({
-        path: 'likes',
-        select: ['_id', 'email', 'displayName', 'role'],
+        path: 'dislikes',
+        select: ['_id', 'email', 'displayName', 'role', 'favourites'],
       });
   
       response.status(200).json({users: dislikes});
