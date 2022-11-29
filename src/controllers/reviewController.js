@@ -29,7 +29,6 @@ async function getOverallRatingByHotelId(request, response) {
         },
       },
     ]);
-    console.log(overallRating);
     response.status(200).json(overallRating);
   } catch (error) {
     response.status(400).json({ error: error.message });
@@ -40,13 +39,18 @@ async function createReview(request, response) {
   const { text, hotelId, rating } = request.body;
 
   try {
-    const review = await Review.create({
+    let review = await Review.create({
       text,
       hotelId,
       likes: [],
       dislikes: [],
       createdBy: request.user[0],
       rating,
+    })
+
+    review = await review.populate({
+      path: 'createdBy',
+      select: ['_id', 'email', 'displayName', 'role'],
     });
 
     response.status(200).json(review);
